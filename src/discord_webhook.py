@@ -16,7 +16,7 @@ async def send_discord_notification(listing):
         "url": f"https://marketplace.skymavis.com/collections/sabong-saga-genesis/{token_id}",
         "color": 5763719,
         "fields": [
-            {"name": "Price", "value": f"{listing['amount']} RON (~{listing['usd_value']})", "inline": True},
+            {"name": "Price", "value": f"{listing['amount']} RON (~${listing['usd_value']})", "inline": True},
             {"name": "Seller", "value": f"[{listing['rns_seller']}](https://marketplace.skymavis.com/account/{listing['seller']})", "inline": True},
             {"name": "Expiration", "value": f"<t:{listing['order']['expiredAt']}:R>", "inline": True},
         ],
