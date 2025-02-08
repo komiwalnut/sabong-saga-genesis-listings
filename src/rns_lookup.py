@@ -1,6 +1,7 @@
 import aiohttp
 from eth_utils import keccak
 import string
+from src.config import SM_KEY
 
 
 def name_hash(name: str) -> str:
@@ -24,8 +25,11 @@ async def check_rns(owner_address: str) -> str:
     reverse_domain = owner_address[2:] + ".addr.reverse"
     reverse_name_hash = name_hash(reverse_domain)
 
-    url = 'https://api.roninchain.com/rpc'
-    headers = {'Content-Type': 'application/json'}
+    url = 'https://api-gateway.skymavis.com/rpc/'
+    headers = {
+        'Content-Type': 'application/json',
+        'X-API-Key': SM_KEY
+    }
     payload = {
         "method": "eth_call",
         "params": [

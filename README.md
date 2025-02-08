@@ -11,6 +11,25 @@ Ensure you have the following installed on your Linux system:
 - virtualenv (Install using `pip install virtualenv` if not installed)
 - pm2 (Process manager for Node.js, install using `npm install -g pm2`)
 
+# Create Your Sky Mavis API Key
+1. Visit the Sky Mavis Developer Console:
+   -  Open your browser and navigate to: https://developers.skymavis.com/console/applications/
+2. Sign In / Sign Up:
+   - If you don’t already have an account, sign up for one.
+   - Log in with your credentials.
+3. Create a New Application:
+   - Once logged in, locate the option to create a new application (often labeled "Create Application" or similar).
+   - Fill in the required details (Application Name) for your application.
+   - After submitting the form, your application will be created, and you should be provided with an API key.
+4. Copy Your API Key
+
+# Setting Up Environment Variables
+Create a .env file in the project directory and add the following:
+```bash
+DISCORD_WEBHOOK_URL=your_webhook_url_here
+SM_KEY=your_api_key
+```
+
 # Setting Up the Virtual Environment
 1. Open a terminal and navigate to the project directory:
    ```bash
@@ -24,12 +43,6 @@ Ensure you have the following installed on your Linux system:
    ```bash
    source sabungan-venv/bin/activate
    ```
-
-# Setting Up Environment Variables
-Create a .env file in the project directory and add the following:
-```bash
-DISCORD_WEBHOOK_URL=your_webhook_url_here
-```
 
 # Installing Dependencies
 Once the virtual environment is activated, install the required dependencies from requirements.txt:
