@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
       {
-        name: "sabong-saga-genesis-listings-tracker",
+        name: "ssg-listings-tracker",
         script: "./main.py",
         interpreter: "./sabungan-venv/bin/python3",
         watch: false,
