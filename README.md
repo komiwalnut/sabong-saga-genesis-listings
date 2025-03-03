@@ -33,7 +33,7 @@ SM_KEY=your_api_key
 # Setting Up the Virtual Environment
 1. Open a terminal and navigate to the project directory:
    ```bash
-   cd Sabungan-listings
+   cd sabong-saga-genesis-listings
    ```
 3. Create a virtual environment named sabungan-venv:
    ```bash
