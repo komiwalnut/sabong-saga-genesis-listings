@@ -65,15 +65,15 @@ Once the virtual environment is activated, install the required dependencies fro
    ```
 4. To restart the application if needed:
    ```bash
-   pm2 restart sabong-saga-genesis-listings-tracker
+   pm2 restart ssg-listings-tracker
    ```
 5. To stop the application:
     ```bash
-   pm2 stop sabong-saga-genesis-listings-tracker
+   pm2 stop ssg-listings-tracker
    ```
 6. To remove the application from pm2:
    ```bash
-   pm2 delete sabong-saga-genesis-listings-tracker
+   pm2 delete ssg-listings-tracker
    ```
    
 # Keeping PM2 Running After Reboot
