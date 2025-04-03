@@ -1,4 +1,5 @@
 import aiohttp
+import logging
 from datetime import datetime, timezone
 from src.config import DISCORD_WEBHOOK_URL
 
@@ -6,6 +7,14 @@ from src.config import DISCORD_WEBHOOK_URL
 async def send_discord_notification(listing):
     token_id = listing["tokenId"]
     cdn_image = listing["cdnImage"]
+
+    amount = listing["amount"]
+    usd_value = listing["usd_value"]
+
+    amount_str = str(float(amount)).rstrip('0').rstrip('.')
+    usd_str = str(float(usd_value)).rstrip('0').rstrip('.')
+    
+    payment_info = f"{amount_str} RON (~${usd_str})"
 
     embed = {
         "author": {
@@ -16,7 +25,7 @@ async def send_discord_notification(listing):
         "url": f"https://marketplace.skymavis.com/collections/sabong-saga-genesis/{token_id}",
         "color": 5763719,
         "fields": [
-            {"name": "Price", "value": f"{listing['amount']} RON (~${listing['usd_value']})", "inline": True},
+            {"name": "Price", "value": payment_info, "inline": True},
             {"name": "Seller", "value": f"[{listing['rns_seller']}](https://marketplace.skymavis.com/account/{listing['seller']})", "inline": True},
             {"name": "Expiration", "value": f"<t:{listing['order']['expiredAt']}:R>", "inline": True},
         ],
@@ -32,10 +41,10 @@ async def send_discord_notification(listing):
     attributes = listing.get("attributes", {})
     for key in group1_keys:
         if key in attributes:
-            value = ", ".join(attributes[key]).capitalize()
+            field_value = ", ".join(attributes[key]).capitalize()
             embed["fields"].append({
                 "name": key.title(),
-                "value": value,
+                "value": field_value.title(),
                 "inline": True
             })
 
@@ -48,9 +57,17 @@ async def send_discord_notification(listing):
                 "value": birthdate_str,
                 "inline": True
             })
-        except Exception:
-            pass
+        except Exception as e:
+            logging.error(f"Error formatting birthdate: {str(e)}")
 
-    async with aiohttp.ClientSession() as session:
-        async with session.post(DISCORD_WEBHOOK_URL, json={"embeds": [embed]}) as response:
-            return response.status == 204
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.post(DISCORD_WEBHOOK_URL, json={"embeds": [embed]}) as response:
+                success = response.status == 204
+                if not success:
+                    response_text = await response.text()
+                    logging.error(f"Discord API error: Status {response.status}, Response: {response_text}")
+                return success
+    except Exception as e:
+        logging.error(f"Exception when sending Discord notification: {str(e)}")
+        return False
